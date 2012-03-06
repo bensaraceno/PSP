@@ -1,0 +1,45 @@
+NA, US - New York, New York: Hawaiian Tropic bar and catwalk
+NA, US - New York, New York: Hawaiian Tropic restaurant
+NA, US - New York, New York: Hawaiian Tropic front desk
+NA, US - New York, New York: Hawaiian Tropic front entrance
+NA, US - Los Angeles, California: View of Los Angeles skyline
+NA, US - Los Angeles, California: View of downtown LA
+NA, US - Los Angeles, California: View of LAX airport
+NA, US - Long Beach, California: View of the Queen Mary
+NA, US - Burbank, California: View of Burbank
+NA, US - Las Vegas, Nevada: View of the street
+NA, US - Provincetown Massachusettes:
+NA, US - Los Angeles, California: UCLA BruinCAM, Live picture of Dickson Plaza and Royce Hall
+NA, US - San Francisco, CA: View of The Golden Gate Bridge
+NA, US - San Francisco, CA: View of Alcatraz Island
+NA, US - Maui, Hawaii: View of Waileaelua Village
+NA, US - Unknown, Unknown: View of Sergio's Coffeeshop
+
+AF, EG - Hurghada, Cairo: View of Colona Hurghada Jetty
+AF, EG - Sharm El Sheikh, Sinai: View of Helnan Marina
+AF, MU - Beau-Bassin, Mauritius Island: View of the street
+AF, MU - Flic en Flac, Mauritius Island: View from a balcony
+
+EU, FR - Paris, Île-de-France: View of Eiffel Tower
+EU, UK - London, England: Trafalgar Square
+EU, UK - London, England: Aquarium Sharks
+EU, UK - London, England: BBC Radio 1 Studio A
+EU, UK - London, England: BBC Radio 1 Studio B
+EU, SZ - Geneve
+EU, UK - London, England: Norfolk
+EU, UK - London, England: Manchester
+EU, UK - Leeds, West Yorkshire: View of Millenium Square
+EU, UK - London, England: View of Abbey Road Crossing
+EU, FI - Helsinki
+EU, FI - Tempere
+
+AU, AU - Perth, Western Australia: Webcam 1
+AU, AU - Perth, Western Australia: Webcam 2
+
+AS, JP - Tokyo, Panda Pen
+AS, RP - Manila
+AS, KO - Hong Kong: View of Victoria Harbor
+AS, KO - Hong Kong: View of Causeway Bay
+AS, KO - Hong Kong: View of Victoria Park
+AS, KO - Hong Kong: View of the skyline
+AS, KO - Hong Kong: View from the Peak

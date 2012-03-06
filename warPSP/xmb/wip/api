@@ -1,0 +1,76 @@
+/* Helper functions for API hooking.
+
+void add_values(SceCtrlData *pad_data, int count, int neg) {
+	int i, intc;
+	intc = pspSdkDisableInterrupts();
+	for(i = 0; i < count; i++) {
+		if(neg) { pad_data[i].Buttons &= ~newInput.Buttons; } else { pad_data[i].Buttons |= newInput.Buttons; }
+
+		//pad_data[i].Lx = map_axis(pad_data[i].Lx, newInput.Lx);
+		//pad_data[i].Ly = map_axis(pad_data[i].Ly, newInput.Ly);
+	}
+	pspSdkEnableInterrupts(intc);
+}
+
+int read_buffer_positive(SceCtrlData *pad_data, int count) {
+	int ret;
+	ret = sceCtrlReadBufferPositive(pad_data, count);
+	if(ret <= 0) return ret;
+	add_values(pad_data, ret, 0);
+	return ret;
+}
+
+int peek_buffer_positive(SceCtrlData *pad_data, int count) {
+	int ret;
+	ret = sceCtrlPeekBufferPositive(pad_data, count);
+	if(ret <= 0) return ret;
+	add_values(pad_data, ret, 0);
+	return ret;
+}
+
+int read_buffer_negative(SceCtrlData *pad_data, int count) {
+	int ret;
+	ret = sceCtrlReadBufferNegative(pad_data, count);
+	if(ret <= 0) return ret;
+	add_values(pad_data, ret, 1);
+	return ret;
+}
+
+int peek_buffer_negative(SceCtrlData *pad_data, int count) {
+	int ret;
+	ret = sceCtrlPeekBufferNegative(pad_data, count);
+	if(ret <= 0) return ret;
+	add_values(pad_data, ret, 1);
+	return ret;
+}*/
+
+
+IN A USER THREAD
+	/* This is part of the API hooking function that prevents input being sent to the xmb.
+	SceModule *pMod;
+	
+	pMod = sceKernelFindModuleByName("sceController_Service");
+	if (pMod == NULL) { sprintf(err_buffer, "Could not get controller module"); sceKernelTerminateDeleteThread(0); }
+
+	if (apiHookByName(pMod->modid, "sceCtrl", "sceCtrlReadBufferPositive", read_buffer_positive) == 0) {
+		sprintf(err_buffer, "Could not hook controller function"); sceKernelTerminateDeleteThread(0);
+	}
+
+	if (apiHookByName(pMod->modid, "sceCtrl", "sceCtrlPeekBufferPositive", peek_buffer_positive) == 0) {
+		sprintf(err_buffer, "Could not hook controller function"); sceKernelTerminateDeleteThread(0);
+	}
+
+	if (apiHookByName(pMod->modid, "sceCtrl", "sceCtrlReadBufferNegative", peek_buffer_negative) == 0) {
+		sprintf(err_buffer, "Could not hook controller function"); sceKernelTerminateDeleteThread(0);
+	}
+
+	if (apiHookByName(pMod->modid, "sceCtrl", "sceCtrlPeekBufferNegative", peek_buffer_negative) == 0) {
+		sprintf(err_buffer, "Could not hook controller function"); sceKernelTerminateDeleteThread(0);
+	}
+
+	pMod = sceKernelFindModuleByName("sceVshBridge_Driver");
+
+	// Ignore if vshbridge not found.
+	if (pMod) {
+		if (apiHookByName(pMod->modid, "sceVshBridge","vshCtrlReadBufferPositive", read_buffer_positive) == 0) { sprintf(err_buffer, "Could not hook controller function\n"); }
+	}*/

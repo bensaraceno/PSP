@@ -1,0 +1,58 @@
+
+[SIZE="3"][B][COLOR="Red"]Current Bugs & Issues:[/COLOR][/B][/SIZE]
+[COLOR="Red"][B]There are known bugs with this prx:[/B][/COLOR]
+[COLOR="Red"]Problem[/COLOR]: When running, if you try to launch the internet browser, rss, or any other network function, mixed results will happen: psp locks up or prx scan stops responding or both.
+
+[COLOR="Blue"]Reason[/COLOR]: This can't be fixed (currently) because it's not possible to detect when the user starts the internet browser, rss, or other network functions. Once this is figured out, I will make the prx automatically stop, allowing the network processes to be performed and then resume again.
+
+[COLOR="Red"]Problem[/COLOR]: If not disabled and user starts an application (eboot/game/umd) from the game menu: the psp usually freezes or the prx stops (usually the prx just stops and the psp continues)
+
+[COLOR="blue"]Reason[/COLOR]: Still working on getting the xmb to wait for the prx to stop and unload before exiting to the game. I have been able to detect it and stop the prx but the xmb just doesn't wait!
+
+[COLOR="Red"]Problem[/COLOR]: Only the first access point found is displayed correctly in the list. 
+
+[COLOR="blue"]Reason[/COLOR]: I believe the structure for the scan data has changed from the original sdk sample and now requires a different method of retrieving/translating the information. I fixed the bug with the names not being displayed correctly, however the signal strength and protection info is still not right. This is highest priority and am focusing on getting this working first.
+ 
+
+[SIZE="3"][B][COLOR="Navy"]Development/Plans/ToDo[/COLOR][/B][/SIZE]
+Development continues on this prx to release a stable version with features including:
+
+[B]Auto-Connect[/B]
+The first unprotected access point with the highest signal strength will be automatically added to network configuration.
+
+[B]Data Logging[/B]
+Access point information will be logged to a text file. Date, time, access point information and grouping will be available.
+
+[B]GPS Integration[/B]
+Serial GPS and PSP-290 gps integration to allow access points to be pinpointed and refound (no more stumbling). The ability to log access point data to a POI file will be available as well allowing it to be loaded into common mapping programs such as MapThis!
+
+
+I am working on making this compatible as a seplugin prx.
+The idea is to make a prx that runs in the xmb allowing you to listen to music or view photos or videos while scanning in the background.
+
+I plan to release two additional distributions:
+one a standalone eboot similar to wifisniffer,
+the other a game-mode prx allowing you to scan while running games or other applications.
+
+Things I will not be working on:
+[B]WEP cracker[/B]
+It has not yet been discovered how to put the PSP into "promiscuous mode" allowing it to sniff network packets not specifically addressed to the PSP's mac address. Network packets are the basic necessity for possible WEP decryption and until this is achieved, WEP cracking from the PSP cannot be done.
+
+
+[SIZE="4"][B]INSTALLATION[/B][/SIZE]
+SO! In order to install this, you must flash this to your PSP. Use PSPFiler or OE Recovery or whatever other preferred method of flashing files. 
+
+It is attached as lftv_plugin.prx but can be renamed and launched from
+Network Update (update_plugin.prx)
+Certificate Utility (license_plugin.prx)
+Remote Play (premo_plugin.prx) 
+
+The location of the prx files are:
+flash0:\vsh\nodule (on OE firmwares)
+flash0:\vsh\module (on SONY firmwares)
+
+I have only tested this to work with 3.03 OE-C but have seen a video of it working on 3.40 OE-A. 
+ 
+All standard disclaimers apply when flashing/modifying your PSP. I take no responsibility for any misuse of the attached file.
+ 
+Thanks to everyone in advance who tests this and posts feedback!

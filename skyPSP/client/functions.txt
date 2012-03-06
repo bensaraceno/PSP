@@ -1,0 +1,172 @@
+void ellipse( int x, int y, int a, int b, int color )
+{
+  int d1, d2, d3;
+  int px = 0, py;
+  int q;
+  if (a > b) {
+     py = a;
+     d1 = a;
+     q = (b << 16) / a;
+  } else {
+    py = b;
+    d1 = b;
+    q = (a << 16) / b;
+  }
+
+  while (px <= py)
+    if (d1 < 0) {
+       oy--;
+       d1 += 2*py;
+    } else {
+      d2 = (px*q) >> 16;
+      d3 = (py*q) >> 16;
+
+      if (a > b) {
+         pixel( x-px, y-d3, color ); pixel( x+px, y-d3, color );
+         pixel( x-px, y+d3, color ); pixel( x+px, y+d3, color );
+         pixel( x-py, y-d2, color ); pixel( x+py, y-d2, color );
+         pixel( x-py, y+d3, color ); pixel( x+py, y+d2, color );
+      } else {
+         pixel( x-d2, y-py, color ); pixel( x+d2, y-py, color );
+         pixel( x-d2, y+py, color ); pixel( x+d2, y+py, color );
+         pixel( x-d3, y-px, color ); pixel( x+d3, y-px, color );
+         pixel( x-d3, y+px, color ); pixel( x+d3, y+px, color );
+      }
+      d1 -= 2*px - 1 ;
+      px++;
+    }
+}
+
+
+// @param x_pos, y_pos, width, height : where to draw the image to and how big it is on screen
+// @param u0, v0, u1, v1 : the image part which is to be drawn, (0,0,imagewidth,imageheight) for the whole image
+/*void RenderImage(int u0, int v0, int u1, int v1, int x_pos, int y_pos, int width, int height, Image* image) {
+	float start, end;
+	float cur_u = u0;
+	float cur_x = x_pos;
+	float x_end = x_pos + width;
+	float slice = 64.f;
+	//float ustep = (u1-u0)/width * slice;
+	float ustep = (float)(u1-u0)/(float)width * slice; 
+	guStart();
+	sceGuTexImage(0, image->textureWidth, image->textureHeight, image->textureWidth, (void*) image->data);
+
+	// blit maximizing the use of the texture-cache
+	for( start=0, end=width; start<end; start+=slice ) {
+		struct VertexNoColor* vertices = (struct VertexNoColor*)sceGuGetMemory(2 * sizeof(struct VertexNoColor));
+
+		float poly_width = ((cur_x+slice) > x_end) ? (x_end-cur_x) : slice;
+		float source_width = ((cur_u+ustep) > u1) ? (u1-cur_u) : ustep;
+
+		vertices[0].u = cur_u;
+		vertices[0].v = v0;
+		vertices[0].x = cur_x; 
+		vertices[0].y = y_pos; 
+		vertices[0].z = 0;
+
+		cur_u += source_width;
+		cur_x += poly_width;
+
+		vertices[1].u = cur_u;
+		vertices[1].v = v1;
+		vertices[1].x = cur_x;
+		vertices[1].y = (y_pos + height);
+		vertices[1].z = 0;
+
+		void* vramBuffer = (void*)(0x44200000 - (image->textureWidth * image->textureHeight * 4));
+		sceGuDrawBufferList(GU_PSM_8888, vramBuffer, image->textureWidth);
+		sceGuDrawArray(GU_SPRITES, GU_TEXTURE_32BITF | GU_VERTEX_16BIT | GU_TRANSFORM_2D, 2, 0, vertices);
+	}
+	sceGuDrawBufferList(GU_PSM_8888, (void*)getVramDrawBuffer(), PSP_LINE_SIZE);
+	sceGuCopyImage(GU_PSM_8888, 0, 0, image->textureWidth, image->textureHeight, image->textureWidth, vramBuffer, 0, 0, image->textureWidth, (void*) image->data);
+
+	sceGuFinish();
+	sceGuSync(0, 0);
+}*/
+
+
+void drawImageFast(float x, float y, float width, float height, float u0, float u1, float v0, float v1, IMAGE *img) 
+{ 
+   float ii = 0; 
+   short slice = 32; 
+
+   sceGuTexImage(0,img->realWidth,img->realHeight,img->realWidth,(void*)img->data); 
+    
+   for(i = 0; ii < u1; ii += slice) { 
+      VertexUV* vertices = (VertexUV*)sceGuGetMemory(2 * sizeof(VertexUV)); 
+
+      slice = 32; 
+
+      if (ii + slice > u1) slice = width - ii; 
+
+      vertices[0].u = u0 + ii; 
+      vertices[0].v = v0; 
+      vertices[0].x = x + ii; 
+      vertices[0].y = y; 
+
+      vertices[1].u = u0 + ii + slice; 
+      vertices[1].v = v0 + v1; 
+      vertices[1].x = x + ii + slice; 
+      vertices[1].y = y + height; 
+       
+      sceGuDrawArray(GU_SPRITES, GU_TEXTURE_32BITF|GU_VERTEX_32BITF|GU_TRANSFORM_2D, 2, 0, vertices); 
+   } 
+}
+
+
+/**
+* Draw a scaled image to screen.
+*/
+//extern void RenderImage(int u0,int v0,int u1,int v1,int x_pos,int y_pos,int width,int height)
+
+function rotateImage(theImage) 
+   newImage = Image.createEmpty(theImage:height(), theImage:width()) 
+   for x = 1, theImage:width() do 
+      for y = 1, theImage:height() do 
+         newImage:blit(y, x, theImage, x, y, 1, 1) 
+      end 
+   end 
+   return newImage 
+end -- rotateImage 
+
+function scaleImage(newX, newY, theImage) 
+   newImage = Image.createEmpty(newX, newY) 
+   for x = 1, newX do 
+      for y = 1, newY do 
+	  nil image:blit(x, y, Image source, [sourcex, sourcey, width, height], [alpha = true])
+         newImage:blit(x,y , theImage, math.floor(x*(theImage:width()/newX)),math.floor(y*(theI  mage:height()/newY)), 1, 1) 
+      end 
+   end 
+   return newImage 
+end --scaleImage 
+
+
+function Image:magnify(mag) 
+  mag = mag or 2           -- 2 times in size by default 
+  local w = self:width()  
+  local h = self:height() 
+  local result = Image.createEmpty(mag*w, mag*h) 
+  for x = 0, w-1 do 
+    for y = 0, h-1 do 
+      result:fillRect(mag*x, mag*y, mag,mag, self:pixel(x,y)) 
+    end 
+  end 
+  return result 
+end 
+
+
+
+
+
+
+
+
+
+
+float random( float min, float max )
+{
+assert( min < max && "The min value is more then the max value, please fix" );
+float ratio = static_cast<float>( rand() ) / static_cast<float>( RAND_MAX ); 
+float randomFloat = ( ratio * (max - min) ) + min;
+return randomFloat;
+}
